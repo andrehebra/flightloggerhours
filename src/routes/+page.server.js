@@ -5,37 +5,51 @@ import { print } from 'graphql';
 
 import { error } from '@sveltejs/kit';
 
-const query = `query Query($all: Boolean, $after: String) {
-	bookings(all: $all, after: $after) {
-		pageInfo {
-            endCursor
-            hasNextPage
-        }nodes {
-            ... on SingleStudentBooking {
-                startsAt
-                endsAt
-                student {
-                    firstName
-                    lastName
-                }
-                instructor {
-                    firstName
-                    lastName
-                }
-                cancellation {
-                    title
-                    comment
-                    id
-                }
-            }
+const query = `query Bookings($all: Boolean, $after: String, $to: DateTime) {
+    bookings(all: $all, after: $after, to: $to) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      nodes {
+        ... on SingleStudentBooking {
+          startsAt
+          endsAt
+          instructor {
+            firstName
+            lastName
+          }
+          plannedLesson {
+            briefingSeconds
+            totalSeconds
+            debriefingSeconds
+          }
         }
+        ... on MultiStudentBooking {
+          startsAt
+          endsAt
+          instructor {
+            firstName
+            lastName
+          }
+          plannedLesson {
+            briefingSeconds
+            totalSeconds
+            debriefingSeconds
+          }
+        }
+      }
     }
-}`;
+  }`;
+
+const currentDate = new Date();
+const currentISODate = currentDate.toISOString().slice(0, -5);
 
 export const load = async () => {
     console.log('Load function called in page.server.js');
     try {
         const variables = {
+            to: currentISODate,
             all: true,
         };
 
@@ -58,6 +72,7 @@ export const load = async () => {
         while (data.data.bookings.pageInfo.hasNextPage == true) {
             const variables = {
                 all: true,
+                to: currentISODate,
                 after: data.data.bookings.pageInfo.endCursor,
             }
 
@@ -78,7 +93,8 @@ export const load = async () => {
             data = await response.json();
             try {
                 for (let i = 0; i < data.data.bookings.nodes.length; i++) {
-                dataArray.push(data.data.bookings.nodes[i]);
+                    //console.log(data.data.bookings.nodes);
+                    dataArray.push(data.data.bookings.nodes[i]);
                 }
             } catch (e) {
                 console.error("concatination error: " + e);
