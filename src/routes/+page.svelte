@@ -36,7 +36,7 @@
 
         for (let i = 0; i < dataArray.length; i++) {
             let caught = 0;
-            if (dataArray[i] != null && dataArray[i].instructor != null && dataArray[i].plannedLesson != null) {
+            if (dataArray[i] != null && dataArray[i].instructor != null && dataArray[i].registration != null) {
                 for (let j = 0; j < instructorList.length; j++) {
                     if (dataArray[i].instructor.firstName == instructorList[j].firstName && dataArray[i].instructor.lastName == instructorList[j].lastName) {
                         caught = 1;
@@ -47,16 +47,16 @@
                     instructorList.push({
                         firstName: dataArray[i].instructor.firstName,
                         lastName: dataArray[i].instructor.lastName,
-                        briefingSeconds: dataArray[i].plannedLesson.briefingSeconds,
-                        totalSeconds: dataArray[i].plannedLesson.totalSeconds,
-                        debriefingSeconds: dataArray[i].plannedLesson.debriefingSeconds,
+                        briefingSeconds: dataArray[i].registration.briefingSeconds,
+                        totalSeconds: dataArray[i].registration.totalSeconds,
+                        debriefingSeconds: dataArray[i].registration.debriefingSeconds,
                     })
                 } else if (caught == 1) {
                     for (let j = 0; j < instructorList.length; j++) {
                         if (dataArray[i].instructor.firstName == instructorList[j].firstName && dataArray[i].instructor.lastName == instructorList[j].lastName) {
-                            instructorList[j].briefingSeconds += dataArray[i].plannedLesson.briefingSeconds;
-                            instructorList[j].totalSeconds += dataArray[i].plannedLesson.totalSeconds;
-                            instructorList[j].debriefingSeconds += dataArray[i].plannedLesson.debriefingSeconds;
+                            instructorList[j].briefingSeconds += dataArray[i].registration.briefingSeconds;
+                            instructorList[j].totalSeconds += dataArray[i].registration.totalSeconds;
+                            instructorList[j].debriefingSeconds += dataArray[i].registration.debriefingSeconds;
                         }
                     }
                 } else {

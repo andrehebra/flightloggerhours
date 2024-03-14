@@ -19,7 +19,7 @@ const query = `query Bookings($all: Boolean, $after: String, $to: DateTime) {
             firstName
             lastName
           }
-          plannedLesson {
+          registration {
             briefingSeconds
             totalSeconds
             debriefingSeconds
@@ -32,7 +32,7 @@ const query = `query Bookings($all: Boolean, $after: String, $to: DateTime) {
             firstName
             lastName
           }
-          plannedLesson {
+          registrations {
             briefingSeconds
             totalSeconds
             debriefingSeconds
