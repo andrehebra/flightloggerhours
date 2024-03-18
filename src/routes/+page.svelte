@@ -27,7 +27,7 @@
 
     let dataArray = [...data.dataArray];
 
-    console.log(dataArray);
+    //console.log(dataArray);
 
     const currentDate = new Date();
     const currentISODate = currentDate.toISOString().slice(0, -5);
@@ -36,9 +36,7 @@
     let periodArray = [];
     let selectedPeriod;
     let periodStartDate = new Date("February 18, 2024 00:00:00");
-    console.log("Period Start Date: " + periodStartDate);
-    let nextPeriod = new Date(periodStartDate.getTime());;
-    console.log("Next Day: " + nextPeriod);
+    let nextPeriod = new Date(periodStartDate.getTime());
     
     let tempNextDate = new Date(periodStartDate.getTime() + (13*24*60*60*1000));
 
@@ -57,7 +55,7 @@
             value: nextPeriod.toISOString().slice(0, -5),
             name: nextPeriod.toLocaleDateString('en-US') + " - " + tempNextDate.toLocaleDateString('en-US'),
         })
-        console.log(periodArray);
+        //console.log(periodArray);
     }
 
     function compareFirst(a,b) {
@@ -144,8 +142,8 @@
         instructorList.sort(compareFirst);
 
         //console.log(instructorList);
-        console.log(instructorList);
-        console.log(selectedPeriod);
+        //console.log(instructorList);
+        //console.log(selectedPeriod);
     }
     
 </script>
