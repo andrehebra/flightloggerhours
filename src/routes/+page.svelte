@@ -163,18 +163,18 @@
 <Table>
     <TableHead>
         <TableHeadCell>Instructor</TableHeadCell>
-        <TableHeadCell>Briefing</TableHeadCell>
+        <!--  <TableHeadCell>Briefing</TableHeadCell>
         <TableHeadCell>Flight</TableHeadCell>
-        <TableHeadCell>Debfiefing</TableHeadCell>
+        <TableHeadCell>Debfiefing</TableHeadCell> -->
         <TableHeadCell>Total</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each instructorList as instructor}
             <TableBodyRow>
                 <TableBodyCell>{instructor.firstName} {instructor.lastName}</TableBodyCell>
-                <TableBodyCell>{instructor.briefingSeconds / 60 / 60}</TableBodyCell>
+                <!--  <TableBodyCell>{instructor.briefingSeconds / 60 / 60}</TableBodyCell>
                 <TableBodyCell>{instructor.totalSeconds / 60 / 60}</TableBodyCell>
-                <TableBodyCell>{instructor.debriefingSeconds / 60 / 60}</TableBodyCell>
+                <TableBodyCell>{instructor.debriefingSeconds / 60 / 60}</TableBodyCell> -->
                 <TableBodyCell>{(instructor.debriefingSeconds + instructor.totalSeconds + instructor.briefingSeconds) / 60 / 60}</TableBodyCell>
             </TableBodyRow>
         {/each}
