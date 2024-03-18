@@ -87,6 +87,7 @@
         
 
         for (let i = 0; i < dataArray.length; i++) {
+            //console.log(dataArray[i]);
             let caught = 0;
             if (dataArray[i] != null && dataArray[i].instructor != null && dataArray[i].registration != null && dataArray[i].startsAt != null) {
                 if (dataArray[i].instructor.firstName != "Dispatch" && dataArray[i].startsAt >= currentSelectedPeriod.toISOString().slice(0, -5) && dataArray[i].startsAt < endOfPeriod.toISOString().slice(0, -5)) {
@@ -119,8 +120,56 @@
                     }
                 }
                 
-            } else {
-                console.log(dataArray[i]);
+            } else if (dataArray[i] != null && dataArray[i].instructor != null && dataArray[i].registrations != null && dataArray[i].startsAt != null) {
+                        if (dataArray[i].instructor.firstName != "Dispatch" && dataArray[i].startsAt >= currentSelectedPeriod.toISOString().slice(0, -5) && dataArray[i].startsAt < endOfPeriod.toISOString().slice(0, -5)) {
+                            for (let j = 0; j < instructorList.length; j++) {
+                                if (dataArray[i].instructor.firstName == instructorList[j].firstName && dataArray[i].instructor.lastName == instructorList[j].lastName) {
+                                    caught = 1;
+                                }
+                            }
+
+                            console.log(dataArray[i]);
+
+                            let max = {
+                                brief: 0,
+                                total: 0,
+                                debrief: 0
+                            }
+
+                            for (let j = 0; j < dataArray[i].registrations.length; j++) {
+                                if (dataArray[i].registrations[j].briefingSeconds > max.brief) {
+                                    max.brief = dataArray[i].registrations[j].briefingSeconds;
+                                }
+                                if (dataArray[i].registrations[j].totalSeconds > max.total) {
+                                    max.total = dataArray[i].registrations[j].totalSeconds;
+                                }
+                                if (dataArray[i].registrations[j].debriefingSeconds > max.debrief) {
+                                    max.debrief = dataArray[i].registrations[j].debriefingSeconds;
+                                }
+                            }
+
+                            if (caught == 0) {
+                                instructorList.push({
+                                    firstName: dataArray[i].instructor.firstName,
+                                    lastName: dataArray[i].instructor.lastName,
+                                    briefingSeconds: max.brief,
+                                    totalSeconds: max.total,
+                                    debriefingSeconds: max.debrief,
+                                    reservationList: [dataArray[i]]
+                                })
+                            } else if (caught == 1) {
+                                for (let j = 0; j < instructorList.length; j++) {
+                                    if (dataArray[i].instructor.firstName == instructorList[j].firstName && dataArray[i].instructor.lastName == instructorList[j].lastName) {
+                                        instructorList[j].briefingSeconds += max.brief;
+                                        instructorList[j].totalSeconds += max.total;
+                                        instructorList[j].debriefingSeconds += max.debrief;
+                                        instructorList[j].reservationList.push(dataArray[i]);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                //console.log(dataArray[i]);
             }
             
         }
@@ -141,6 +190,7 @@
         instructorList.sort(compareLast);
         instructorList.sort(compareFirst);
 
+        
         //console.log(instructorList);
         //console.log(instructorList);
         //console.log(selectedPeriod);
@@ -162,10 +212,13 @@
 <Label>
     Select Pay Period
     
-    <Select class="mt-2" items={periodArray} bind:value={selectedPeriod} />
+    <Select class="mt-2" on:change={() => {calculate()}} items={periodArray} bind:value={selectedPeriod} />
 </Label>
+
+<!--
 <div class="padding"></div>
 <Button on:click={ calculate }>Submit</Button>
+-->
 
 <Hr />
 
