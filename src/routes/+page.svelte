@@ -5,6 +5,7 @@
     import { Progressbar } from 'flowbite-svelte';
     import { sineOut } from 'svelte/easing';
     import { DarkMode } from 'flowbite-svelte';
+    import { Select } from 'flowbite-svelte';
 
     export let data;
 
@@ -19,20 +20,50 @@
     let cancellationCount = 0;
 
     let cancellationArray = [];
+
+    
     
     
 
     let dataArray = [...data.dataArray];
 
-    //console.log(dataArray);
+    console.log(dataArray);
 
     const currentDate = new Date();
     const currentISODate = currentDate.toISOString().slice(0, -5);
     let instructorList = [];
 
+    let periodArray = [];
+    let selectedPeriod;
+    let periodStartDate = new Date("February 18, 2024 00:00:00");
+    console.log("Period Start Date: " + periodStartDate);
+    let nextPeriod = new Date(periodStartDate.getTime());;
+    console.log("Next Day: " + nextPeriod);
+    
+    let tempNextDate = new Date(periodStartDate.getTime() + (13*24*60*60*1000));
+
+    periodArray.push({
+        date: periodStartDate,
+        ISODate: periodStartDate.toISOString().slice(0, -5),
+        value: periodStartDate.toISOString().slice(0, -5),
+        name: periodStartDate.toLocaleDateString('en-US') + " - " + tempNextDate.toLocaleDateString('en-US'),
+    });
+    while (nextPeriod < currentDate) {
+        nextPeriod = new Date(nextPeriod.getTime() + (14*24*60*60*1000));
+        tempNextDate = new Date(nextPeriod.getTime() + (13*24*60*60*1000));
+        periodArray.push({
+            date: nextPeriod,
+            ISODate: nextPeriod.toISOString().slice(0, -5),
+            value: nextPeriod.toISOString().slice(0, -5),
+            name: nextPeriod.toLocaleDateString('en-US') + " - " + tempNextDate.toLocaleDateString('en-US'),
+        })
+        console.log(periodArray);
+    }
+
+
     function calculate() {
 
-        //let instructorList = [];
+        instructorList.splice(0,instructorList.length)
 
         for (let i = 0; i < dataArray.length; i++) {
             let caught = 0;
@@ -63,7 +94,7 @@
                     console.log("This was not caught for some reason" + dataArray[i]);
                 }
             } else {
-                console.log(dataArray[i]);
+                //console.log(dataArray[i]);
             }
             
         }
@@ -84,6 +115,10 @@
 
 <Hr />
 
+<Label>
+    Select Pay Period
+    <Select class="mt-2" items={periodArray} bind:value={selectedPeriod} />
+</Label>
 
 <Button on:click={ calculate }>Submit</Button>
 

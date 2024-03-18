@@ -43,6 +43,11 @@ const query = `query Bookings($all: Boolean, $after: String, $to: DateTime) {
   }`;
 
 const currentDate = new Date();
+//console.log(currentDate);
+//const pastDate = new Date(); 
+//pastDate = pastDate.setDate(pastDate.getDate() - 45);
+//console.log(pastDate);
+
 const currentISODate = currentDate.toISOString().slice(0, -5);
 
 export const load = async () => {
