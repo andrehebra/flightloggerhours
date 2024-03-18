@@ -11,15 +11,9 @@
 
     let firstName = "";
     let lastName = "";
-    let attendanceRate = 0;
 
     $: firstName;
     $: lastName;
-
-    let reservationCount = 0;
-    let cancellationCount = 0;
-
-    let cancellationArray = [];
 
     
     
@@ -30,7 +24,6 @@
     //console.log(dataArray);
 
     const currentDate = new Date();
-    const currentISODate = currentDate.toISOString().slice(0, -5);
     let instructorList = [];
 
     let periodArray = [];
@@ -177,7 +170,7 @@
         if (instructorList.length == 0) {
             instructorList.push({
                 firstName: "No Entries Found",
-                lastName: "test",
+                lastName: "",
                 briefingSeconds: "",
                 totalSeconds: "",
                 debriefingSeconds: "",
