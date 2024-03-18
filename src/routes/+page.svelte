@@ -122,12 +122,26 @@
                 }
                 
             } else {
-                //console.log(dataArray[i]);
+                console.log(dataArray[i]);
             }
             
         }
-        instructorList.sort(compareLast)
-        instructorList.sort(compareFirst)
+
+        if (instructorList.length == 0) {
+            instructorList.push({
+                firstName: "No Entries Found",
+                lastName: "test",
+                briefingSeconds: "",
+                totalSeconds: "",
+                debriefingSeconds: "",
+                reservationList: []
+            })
+        }
+
+        instructorList = instructorList;
+
+        instructorList.sort(compareLast);
+        instructorList.sort(compareFirst);
 
         //console.log(instructorList);
         console.log(instructorList);
@@ -160,6 +174,7 @@
 
 
 <Heading tag='h2'>All Hours for Period</Heading>
+<div class="padding"></div>
 <Table>
     <TableHead>
         <TableHeadCell>Instructor</TableHeadCell>
