@@ -60,46 +60,78 @@
         console.log(periodArray);
     }
 
+    function compareFirst(a,b) {
+        if ( a.firstName < b.firstName ){
+            return -1;
+        }
+        if ( a.firstName > b.firstName ){
+            return 1;
+        }
+        return 0;
+    }
+
+    function compareLast(a,b) {
+        if ( a.lastName < b.lastName ){
+            return -1;
+        }
+        if ( a.lastName > b.lastName ){
+            return 1;
+        }
+        return 0;
+    }
 
     function calculate() {
 
-        instructorList.splice(0,instructorList.length)
+        instructorList.splice(0,instructorList.length);
+
+        let currentSelectedPeriod = new Date(selectedPeriod);
+        let endOfPeriod = new Date(currentSelectedPeriod.getTime() + (14*24*60*60*1000));
+        
 
         for (let i = 0; i < dataArray.length; i++) {
             let caught = 0;
-            if (dataArray[i] != null && dataArray[i].instructor != null && dataArray[i].registration != null) {
-                for (let j = 0; j < instructorList.length; j++) {
-                    if (dataArray[i].instructor.firstName == instructorList[j].firstName && dataArray[i].instructor.lastName == instructorList[j].lastName) {
-                        caught = 1;
-                    }
-                }
-
-                if (caught == 0) {
-                    instructorList.push({
-                        firstName: dataArray[i].instructor.firstName,
-                        lastName: dataArray[i].instructor.lastName,
-                        briefingSeconds: dataArray[i].registration.briefingSeconds,
-                        totalSeconds: dataArray[i].registration.totalSeconds,
-                        debriefingSeconds: dataArray[i].registration.debriefingSeconds,
-                    })
-                } else if (caught == 1) {
+            if (dataArray[i] != null && dataArray[i].instructor != null && dataArray[i].registration != null && dataArray[i].startsAt != null) {
+                if (dataArray[i].startsAt >= currentSelectedPeriod.toISOString().slice(0, -5) && dataArray[i].startsAt < endOfPeriod.toISOString().slice(0, -5)) {
                     for (let j = 0; j < instructorList.length; j++) {
                         if (dataArray[i].instructor.firstName == instructorList[j].firstName && dataArray[i].instructor.lastName == instructorList[j].lastName) {
-                            instructorList[j].briefingSeconds += dataArray[i].registration.briefingSeconds;
-                            instructorList[j].totalSeconds += dataArray[i].registration.totalSeconds;
-                            instructorList[j].debriefingSeconds += dataArray[i].registration.debriefingSeconds;
+                            caught = 1;
                         }
                     }
-                } else {
-                    console.log("This was not caught for some reason" + dataArray[i]);
+
+                    if (caught == 0) {
+                        instructorList.push({
+                            firstName: dataArray[i].instructor.firstName,
+                            lastName: dataArray[i].instructor.lastName,
+                            briefingSeconds: dataArray[i].registration.briefingSeconds,
+                            totalSeconds: dataArray[i].registration.totalSeconds,
+                            debriefingSeconds: dataArray[i].registration.debriefingSeconds,
+                            reservationList: [dataArray[i]]
+                        })
+                    } else if (caught == 1) {
+                        for (let j = 0; j < instructorList.length; j++) {
+                            if (dataArray[i].instructor.firstName == instructorList[j].firstName && dataArray[i].instructor.lastName == instructorList[j].lastName) {
+                                instructorList[j].briefingSeconds += dataArray[i].registration.briefingSeconds;
+                                instructorList[j].totalSeconds += dataArray[i].registration.totalSeconds;
+                                instructorList[j].debriefingSeconds += dataArray[i].registration.debriefingSeconds;
+                                instructorList[j].reservationList.push(dataArray[i]);
+                            }
+                        }
+                    } else {
+                        console.log("This was not caught for some reason" + dataArray[i]);
+                    }
                 }
+                
             } else {
                 //console.log(dataArray[i]);
             }
             
         }
+        instructorList.sort(compareLast)
+        instructorList.sort(compareFirst)
 
         //console.log(instructorList);
+        console.log(instructorList);
+        console.log(selectedPeriod);
     }
     
 </script>
@@ -117,9 +149,10 @@
 
 <Label>
     Select Pay Period
+    
     <Select class="mt-2" items={periodArray} bind:value={selectedPeriod} />
 </Label>
-
+<div class="padding"></div>
 <Button on:click={ calculate }>Submit</Button>
 
 <Hr />
@@ -156,5 +189,8 @@
 <style>
    .container {
     padding: 20px;
+   }
+   .padding {
+        height: 15px;
    }
 </style>

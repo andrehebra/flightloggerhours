@@ -42,7 +42,8 @@ const query = `query Bookings($all: Boolean, $after: String, $to: DateTime) {
     }
   }`;
 
-const currentDate = new Date();
+let currentDate = new Date();
+
 //console.log(currentDate);
 //const pastDate = new Date(); 
 //pastDate = pastDate.setDate(pastDate.getDate() - 45);
