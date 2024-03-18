@@ -121,7 +121,7 @@
                                 }
                             }
 
-                            console.log(dataArray[i]);
+                            //console.log(dataArray[i]);
 
                             let max = {
                                 brief: 0,
