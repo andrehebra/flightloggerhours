@@ -222,7 +222,7 @@
 
 <Heading tag='h2'>All Hours for Period</Heading>
 <div class="padding"></div>
-<Table>
+<Table hoverable={true} shadow>
     <TableHead>
         <TableHeadCell>Instructor</TableHeadCell>
         <!--  <TableHeadCell>Briefing</TableHeadCell>
