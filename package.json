@@ -29,6 +29,7 @@
 	"type": "module",
 	"dependencies": {
 		"graphql": "^16.8.1",
-		"graphql-tag": "^2.12.6"
+		"graphql-tag": "^2.12.6",
+		"svelte-routing": "^2.12.0"
 	}
 }
