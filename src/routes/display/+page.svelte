@@ -220,7 +220,7 @@
 
 
 
-<Heading tag='h2'>All Hours for Period</Heading>
+<Heading tag='h2'>Instructor Hours for Period</Heading>
 <div class="padding"></div>
 <Table hoverable={true} shadow>
     <TableHead>
@@ -251,6 +251,7 @@
 <style>
    .container {
     padding: 20px;
+    margin: auto;
    }
    .padding {
         height: 15px;

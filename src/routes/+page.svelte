@@ -20,10 +20,11 @@
 
 <style>
     .container {
-        width: 100vw;
-        height: 100vh;
         display: flex;
-        align-items: center;
+        height: 100vh;
+        margin-left: auto;
+        margin-right: auto;
         justify-content: center;
+        align-items:center;
     }
 </style>
