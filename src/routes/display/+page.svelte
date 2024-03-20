@@ -18,6 +18,8 @@
     $: firstName;
     $: lastName;
 
+    let filled = false;
+
     
     
     
@@ -186,6 +188,8 @@
         instructorList.sort(compareLast);
         instructorList.sort(compareFirst);
 
+        filled = true;
+
         
         //console.log(instructorList);
         //console.log(instructorList);
@@ -216,6 +220,7 @@
 <Button on:click={ calculate }>Submit</Button>
 -->
 
+{#if filled}
 <Hr />
 
 
@@ -242,6 +247,7 @@
         {/each}
     </TableBody>
 </Table>
+{/if}
 
 
 
