@@ -191,7 +191,7 @@
         filled = true;
 
         
-        //console.log(instructorList);
+        console.log(instructorList);
         //console.log(instructorList);
         //console.log(selectedPeriod);
     }
