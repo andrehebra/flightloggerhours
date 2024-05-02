@@ -35,6 +35,20 @@
     let selectedPeriod;
     let periodStartDate = new Date("February 18, 2024 00:00:00");
 
+    let selectedInstructor = "";
+
+    function selectInstructor(lastName) {
+        selectedInstructor = lastName;
+    }
+
+    function getTime(reservation) {
+        if (reservation.registration != null && reservation.registration.briefingSeconds!=null && reservation.registration.debriefingSeconds != null && reservation.registration.totalSeconds != null) {
+            return (reservation.registration.briefingSeconds + reservation.registration.debriefingSeconds + reservation.registration.totalSeconds)/60/60;
+        }
+        
+        return -1;
+    }
+
     let earliestDate = new Date(currentDate);
     earliestDate.setDate(earliestDate.getDate() - 30);
     let nextPeriod = new Date(periodStartDate.getTime());
@@ -238,13 +252,29 @@
     </TableHead>
     <TableBody>
         {#each instructorList as instructor}
-            <TableBodyRow>
+            <TableBodyRow on:click={selectInstructor(instructor.lastName)}>
                 <TableBodyCell>{instructor.firstName} {instructor.lastName}</TableBodyCell>
                 <!--  <TableBodyCell>{instructor.briefingSeconds / 60 / 60}</TableBodyCell>
                 <TableBodyCell>{instructor.totalSeconds / 60 / 60}</TableBodyCell>
                 <TableBodyCell>{instructor.debriefingSeconds / 60 / 60}</TableBodyCell> -->
                 <TableBodyCell>{(instructor.debriefingSeconds + instructor.totalSeconds + instructor.briefingSeconds) / 60 / 60}</TableBodyCell>
             </TableBodyRow>
+            {#if selectedInstructor == instructor.lastName}
+                <TableBodyRow>
+                    <Table hoverable={true} shadow>
+                        <TableHead>
+                            <TableHeadCell>Reservation Time</TableHeadCell>
+                            <TableHeadCell>Total Time</TableHeadCell>
+                        </TableHead>
+                        {#each instructor.reservationList as reservation}
+                            <TableBodyRow>
+                                <TableBodyCell>{reservation.startsAt + " " + reservation.endsAt}</TableBodyCell>
+                                <TableBodyCell>{getTime(reservation)}</TableBodyCell>
+                            </TableBodyRow>
+                        {/each}
+                    </Table>
+                </TableBodyRow>
+            {/if}
         {/each}
     </TableBody>
 </Table>
