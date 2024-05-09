@@ -259,6 +259,7 @@
                 <TableBodyCell>{instructor.debriefingSeconds / 60 / 60}</TableBodyCell> -->
                 <TableBodyCell>{(instructor.debriefingSeconds + instructor.totalSeconds + instructor.briefingSeconds) / 60 / 60}</TableBodyCell>
             </TableBodyRow>
+            <!--
             {#if selectedInstructor == instructor.lastName}
                 <TableBodyRow>
                     <Table hoverable={true} shadow>
@@ -275,6 +276,7 @@
                     </Table>
                 </TableBodyRow>
             {/if}
+            -->
         {/each}
     </TableBody>
 </Table>
