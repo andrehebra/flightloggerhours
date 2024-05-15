@@ -259,24 +259,26 @@
                 <TableBodyCell>{instructor.debriefingSeconds / 60 / 60}</TableBodyCell> -->
                 <TableBodyCell>{(instructor.debriefingSeconds + instructor.totalSeconds + instructor.briefingSeconds) / 60 / 60}</TableBodyCell>
             </TableBodyRow>
-            <!--
+            
             {#if selectedInstructor == instructor.lastName}
                 <TableBodyRow>
                     <Table hoverable={true} shadow>
                         <TableHead>
-                            <TableHeadCell>Reservation Time</TableHeadCell>
+                            <TableHeadCell>Reservation Start</TableHeadCell>
+                            <TableHeadCell>Reservation End</TableHeadCell>
                             <TableHeadCell>Total Time</TableHeadCell>
                         </TableHead>
                         {#each instructor.reservationList as reservation}
                             <TableBodyRow>
-                                <TableBodyCell>{reservation.startsAt + " " + reservation.endsAt}</TableBodyCell>
+                                <TableBodyCell>{reservation.startsAt}</TableBodyCell>
+                                <TableBodyCell>{reservation.endsAt}</TableBodyCell>
                                 <TableBodyCell>{getTime(reservation)}</TableBodyCell>
                             </TableBodyRow>
                         {/each}
                     </Table>
                 </TableBodyRow>
             {/if}
-            -->
+            
         {/each}
     </TableBody>
 </Table>
