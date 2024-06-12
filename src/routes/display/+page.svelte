@@ -30,6 +30,31 @@
 
     const currentDate = new Date();
     let instructorList = [];
+    let dispatchList = [
+        {
+            date: new Date("5/26/2024"),
+            table: [
+                {
+                    "name": "Chase Harden",
+                    "hours": 49
+                },
+                {
+                    "name": "John Hobbs",
+                    "hours": 56.5
+                },
+                {
+                    "name": "Nick Reynolds",
+                    "hours": 55.3
+                },
+                {
+                    "name": "Eddie Jackson",
+                    "hours": 55.1
+                }
+            ]
+        }
+    ];
+
+    let selectedDispatch;
 
     let periodArray = [];
     let selectedPeriod;
@@ -97,6 +122,14 @@
 
         let currentSelectedPeriod = new Date(selectedPeriod);
         let endOfPeriod = new Date(currentSelectedPeriod.getTime() + (14*24*60*60*1000));
+
+        //logic for dispatch time
+        selectedDispatch = [];
+        for (let i = 0; i < dispatchList.length; i++) {
+            if (currentSelectedPeriod.getDate() == dispatchList[i].date.getDate()) {
+                selectedDispatch = dispatchList[i].table;
+            }
+        }
         
 
         for (let i = 0; i < dataArray.length; i++) {
@@ -278,6 +311,26 @@
                     </Table>
                 </TableBodyRow>
             {/if}
+            
+        {/each}
+    </TableBody>
+</Table>
+
+<Hr />
+
+<Heading tag='h2'>Dispatcher Hours for Period</Heading>
+<div class="padding"></div>
+<Table hoverable={true} shadow>
+    <TableHead>
+        <TableHeadCell>Dispatcher</TableHeadCell>
+        <TableHeadCell>Total</TableHeadCell>
+    </TableHead>
+    <TableBody>
+        {#each selectedDispatch as dispatcher}
+            <TableBodyRow>
+                <TableBodyCell>{dispatcher.name}</TableBodyCell>
+                <TableBodyCell>{dispatcher.hours}</TableBodyCell>
+            </TableBodyRow>
             
         {/each}
     </TableBody>
