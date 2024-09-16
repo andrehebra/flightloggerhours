@@ -159,6 +159,27 @@
 					hours: 60.7
 				}
 			]
+		},
+		{
+			date: new Date('9/1/2024'),
+			table: [
+				{
+					name: 'Chase Harden',
+					hours: 44.2
+				},
+				{
+					name: 'John Hobbs',
+					hours: 39.1
+				},
+				{
+					name: 'Nick Reynolds',
+					hours: 56.9
+				},
+				{
+					name: 'Eddie Jackson',
+					hours: 52.5
+				}
+			]
 		}
 	];
 
